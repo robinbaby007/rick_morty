@@ -31,6 +31,14 @@ class KtorClient {
     suspend fun getCharacter(id: Int) = client
         .get("character/$id")
         .body<Character>()
+
+    private inline fun <T> safeApiCall(apiCall: () -> T): ApiOperation<T> {
+        return try {
+            ApiOperation.Success(data = apiCall())
+        } catch (e: Exception) {
+            ApiOperation.Failure(exception = e)
+        }
+    }
 }
 
 sealed interface ApiOperation<T> {
