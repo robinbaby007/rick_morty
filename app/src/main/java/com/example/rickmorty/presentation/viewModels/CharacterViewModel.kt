@@ -16,11 +16,10 @@ class CharacterViewModel @Inject constructor(private val characterRepository: Ch
     ViewModel() {
     private var _characterDetailsState = MutableStateFlow<CharacterState>(CharacterState.Loading)
     val characterDetailsState = _characterDetailsState.asStateFlow()
-
-    fun getCharacterDetails(characterId: Int){
+    fun getCharacterDetails(characterId: Int) {
         viewModelScope.launch {
             val characterDetails = characterRepository
-                .getCharacter(1)
+                .getCharacter(id = characterId)
             _characterDetailsState
                 .update {
                     CharacterState.Success(character = characterDetails)
