@@ -9,4 +9,6 @@ fun CharacterDetailsScreen(
     characterId: Int,
     viewModel: MainViewModel = hiltViewModel()
 ) {
+
+
 }
