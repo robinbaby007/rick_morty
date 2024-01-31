@@ -1,6 +1,7 @@
 package com.example.rickmorty.di
 
 import com.example.network.KtorClient
+import com.example.rickmorty.repositories.CharacterRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,4 +14,9 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideKtorClient(): KtorClient = KtorClient()
+
+    @Provides
+    @Singleton
+    fun provideCharacterRepository(ktorClient: KtorClient): CharacterRepository =
+        CharacterRepository(ktorClient = ktorClient)
 }
