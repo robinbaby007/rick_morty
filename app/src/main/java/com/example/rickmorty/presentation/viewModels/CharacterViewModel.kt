@@ -12,12 +12,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val characterRepository: CharacterRepository) :
+class CharacterViewModel @Inject constructor(private val characterRepository: CharacterRepository) :
     ViewModel() {
     private var _characterDetailsState = MutableStateFlow<CharacterState>(CharacterState.Loading)
     val characterDetailsState = _characterDetailsState.asStateFlow()
 
-    init {
+    fun getCharacterDetails(characterId: Int){
         viewModelScope.launch {
             val characterDetails = characterRepository
                 .getCharacter(1)
