@@ -2,7 +2,7 @@ package com.example.rickmorty.presentation.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.network.Character
+import com.example.network.models.remote.Character
 import com.example.rickmorty.presentation.components.common.DataPoint
 import com.example.rickmorty.repositories.CharacterRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
