@@ -1,5 +1,6 @@
 package com.example.network
 
+import com.example.network.models.remote.Character
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
