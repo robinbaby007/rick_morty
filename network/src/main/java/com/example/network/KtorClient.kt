@@ -28,9 +28,13 @@ class KtorClient {
         }
     }
 
-    suspend fun getCharacter(id: Int) = client
-        .get("character/$id")
-        .body<Character>()
+    suspend fun getCharacter(id: Int) :ApiOperation<Character>{
+        return safeApiCall {
+            client
+                .get("character/$id")
+                .body<Character>()
+        }
+    }
 
     private inline fun <T> safeApiCall(apiCall: () -> T): ApiOperation<T> {
         return try {
