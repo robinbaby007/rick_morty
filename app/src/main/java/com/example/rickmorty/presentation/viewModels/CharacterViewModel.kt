@@ -3,6 +3,7 @@ package com.example.rickmorty.presentation.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.network.Character
+import com.example.rickmorty.presentation.components.common.DataPoint
 import com.example.rickmorty.repositories.CharacterRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,9 +22,22 @@ class CharacterViewModel @Inject constructor(private val characterRepository: Ch
             characterRepository
                 .getCharacter(id = characterId)
                 .onSuccess { character ->
+
+                    val dataPoints = buildList<DataPoint> {
+                        add(DataPoint("Name", character.name))
+                        add(DataPoint("Gender", character.gender))
+                        add(DataPoint("Species", character.species))
+                        add(DataPoint("Origin", character.origin.name))
+                        character.type.takeIf { it.isNotEmpty() }?.let { type ->
+                            add(DataPoint("Type", type))
+                        }
+                    }
                     _characterDetailsState
                         .update {
-                            CharacterState.Success(character = character)
+                            CharacterState.Success(
+                                character = character,
+                                dataPoints = dataPoints
+                            )
                         }
                 }
                 .onFailure { exception ->
@@ -39,6 +53,10 @@ class CharacterViewModel @Inject constructor(private val characterRepository: Ch
 
 sealed interface CharacterState {
     data object Loading : CharacterState
-    data class Success(val character: Character) : CharacterState
+    data class Success(
+        val character: Character,
+        val dataPoints: List<DataPoint>
+    ) : CharacterState
+
     data class Error(val message: String) : CharacterState
 }
