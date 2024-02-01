@@ -18,12 +18,21 @@ class CharacterViewModel @Inject constructor(private val characterRepository: Ch
     val characterDetailsState = _characterDetailsState.asStateFlow()
     fun getCharacterDetails(characterId: Int) {
         viewModelScope.launch {
-            val characterDetails = characterRepository
+            characterRepository
                 .getCharacter(id = characterId)
-            _characterDetailsState
-                .update {
-                    CharacterState.Success(character = characterDetails)
+                .onSuccess { character ->
+                    _characterDetailsState
+                        .update {
+                            CharacterState.Success(character = character)
+                        }
                 }
+                .onFailure { exception ->
+                    _characterDetailsState
+                        .update {
+                            CharacterState.Error(message = exception.message ?: "Unknown Error")
+                        }
+                }
+
         }
     }
 }
