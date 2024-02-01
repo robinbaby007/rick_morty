@@ -1,6 +1,7 @@
 package com.example.rickmorty.presentation.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,6 +25,7 @@ fun CharacterImage(
         },
         modifier = modifier
             .fillMaxWidth()
+            .padding(16.dp)
             .clip(RoundedCornerShape(12.dp))
     )
 }
