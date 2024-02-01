@@ -1,4 +1,4 @@
-package com.example.network
+package com.example.network.models.remote
 
 
 import kotlinx.serialization.SerialName
