@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Character(
+data class RemoteCharacter(
     @SerialName("created")
     val created: String,
     @SerialName("episode")
