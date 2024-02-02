@@ -1,6 +1,9 @@
 package com.example.network.models.remote
 
 
+import com.example.network.models.domain.CharacterGender
+import com.example.network.models.domain.CharacterStatus
+import com.example.network.models.domain.DomainCharacter
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -30,7 +33,7 @@ data class RemoteCharacter(
     val type: String,
     @SerialName("url")
     val url: String
-){
+) {
     @Serializable
     data class Location(
         @SerialName("name")
@@ -45,5 +48,39 @@ data class RemoteCharacter(
         val name: String,
         @SerialName("url")
         val url: String
+    )
+}
+
+fun RemoteCharacter.toDomainCharacter(): DomainCharacter {
+    val characterGender = when (gender.lowercase()) {
+        "male" -> CharacterGender.Male
+        "female" -> CharacterGender.Female
+        "genderless" -> CharacterGender.GenderLess
+        else -> CharacterGender.Unknown
+    }
+    val characterStatus = when (status.lowercase()) {
+        "alive" -> CharacterStatus.Alive
+        "dead" -> CharacterStatus.Dead
+        else -> CharacterStatus.Unknown
+    }
+    return DomainCharacter(
+        created = created,
+        gender = characterGender,
+        id = id,
+        status = characterStatus,
+        image = image,
+        name = name,
+        location = DomainCharacter.Location(
+            name = location.name,
+            url = location.url
+        ),
+        origin = DomainCharacter.Origin(
+            name = origin.name,
+            url = origin.url
+        ),
+        species = species,
+        type = type,
+        episode = episode,
+        url = url
     )
 }
