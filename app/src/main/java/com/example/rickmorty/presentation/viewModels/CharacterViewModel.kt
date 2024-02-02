@@ -2,7 +2,7 @@ package com.example.rickmorty.presentation.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.network.models.remote.Character
+import com.example.network.models.remote.RemoteCharacter
 import com.example.rickmorty.presentation.components.common.DataPoint
 import com.example.rickmorty.repositories.CharacterRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -54,7 +54,7 @@ class CharacterViewModel @Inject constructor(private val characterRepository: Ch
 sealed interface CharacterState {
     data object Loading : CharacterState
     data class Success(
-        val character: Character,
+        val character: RemoteCharacter,
         val dataPoints: List<DataPoint>
     ) : CharacterState
 
