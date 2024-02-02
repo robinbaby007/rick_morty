@@ -2,6 +2,7 @@ package com.example.rickmorty.presentation.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.network.models.domain.DomainCharacter
 import com.example.network.models.remote.RemoteCharacter
 import com.example.rickmorty.presentation.components.common.DataPoint
 import com.example.rickmorty.repositories.CharacterRepository
@@ -25,7 +26,7 @@ class CharacterViewModel @Inject constructor(private val characterRepository: Ch
 
                     val dataPoints = buildList<DataPoint> {
                         add(DataPoint("Name", character.name))
-                        add(DataPoint("Gender", character.gender))
+                        add(DataPoint("Gender", character.gender.genderName))
                         add(DataPoint("Species", character.species))
                         add(DataPoint("Origin", character.origin.name))
                         character.type.takeIf { it.isNotEmpty() }?.let { type ->
@@ -54,7 +55,7 @@ class CharacterViewModel @Inject constructor(private val characterRepository: Ch
 sealed interface CharacterState {
     data object Loading : CharacterState
     data class Success(
-        val character: RemoteCharacter,
+        val character: DomainCharacter,
         val dataPoints: List<DataPoint>
     ) : CharacterState
 

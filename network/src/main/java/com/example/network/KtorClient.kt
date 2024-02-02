@@ -1,6 +1,8 @@
 package com.example.network
 
-import com.example.network.models.remote.Character
+import com.example.network.models.domain.DomainCharacter
+import com.example.network.models.remote.RemoteCharacter
+import com.example.network.models.remote.toDomainCharacter
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.okhttp.OkHttp
@@ -29,11 +31,12 @@ class KtorClient {
         }
     }
 
-    suspend fun getCharacter(id: Int) :ApiOperation<Character>{
+    suspend fun getCharacter(id: Int) :ApiOperation<DomainCharacter>{
         return safeApiCall {
             client
                 .get("character/$id")
-                .body<Character>()
+                .body<RemoteCharacter>()
+                .toDomainCharacter()
         }
     }
 
